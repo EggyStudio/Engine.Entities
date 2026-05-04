@@ -59,5 +59,8 @@ public sealed class EcsPlugin : IPlugin
             .Write<EcsCommands>()
             .Write<EcsWorld>());
         Logger.Info("EcsPlugin: ECS command flush system registered to PostUpdate stage.");
+
+        // Code-generated [Behavior] layer that registers systems against the ECS world.
+        app.AddPlugin(new BehaviorsPlugin());
     }
 }
