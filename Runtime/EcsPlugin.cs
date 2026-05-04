@@ -52,6 +52,13 @@ public sealed class EcsPlugin : IPlugin
         app.World.InitResource<EcsWorld>();
         app.World.InitResource<EcsCommands>();
 
+        app.AddSystem(Stage.First, new SystemDescriptor(world =>
+            {
+                world.Resource<EcsWorld>().BeginFrame();
+            }, "DefaultPlugins.EcsBeginFrame")
+            .Write<EcsWorld>());
+        Logger.Info("EcsPlugin: EcsWorld frame-begin system registered to First stage.");
+
         app.AddSystem(Stage.PostUpdate, new SystemDescriptor(world =>
             {
                 world.Resource<EcsCommands>().Apply(world.Resource<EcsWorld>());
